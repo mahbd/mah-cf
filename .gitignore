@@ -1,0 +1,10 @@
+/venv/
+/.idea/
+/codeforces.sqlite3
+api/__pycache__/
+/__pycache__/
+/staticfiles/
+/media/
+/static/
+/codeforces/__pycache__/
+/config.json
