@@ -188,7 +188,7 @@ def all_user_all_page_fun():
         pages = get_submission_page_number_cf(user.cf_handle)
         if pages > 150:
             print("******User " + user.cf_handle + " changed handle name*********")
-            return
+            continue
         thread = threading.Thread(target=single_user_cf, args=[user, pages])
         thread.start()
         time.sleep(5)
