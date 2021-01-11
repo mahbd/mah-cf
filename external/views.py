@@ -67,10 +67,11 @@ def save_problems(model, problems, solver):
     solver = User.objects.get(id=solver.id)
     added_problem = []
     for problem in Problem.objects.all():
-        for submission in problem.submissions:
-            if submission['user_id'] == solver.id:
-                added_problem.append(problem.problem_name)
-                break
+        if problem.submissions:
+            for submission in problem.submissions:
+                if submission['user_id'] == solver.id:
+                    added_problem.append(problem.problem_name)
+                    break
     for problem in problems:
         problem = problems[problem]
         problem_name = problem['problem_name']
