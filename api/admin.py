@@ -3,7 +3,7 @@ from .models import User, Problem
 
 
 class UserAdmin(admin.ModelAdmin):
-    list_display = ('id', 'cf_handle', 'solve', 'accepted', 'wrong', 'limit')
+    list_display = ('id', 'cf_handle', 'first_name', 'last_name', 'batch', 'solve', 'accepted', 'wrong', 'limit')
     search_fields = ('cf_handle', 'username', 'first_name', 'last_name', 'batch')
 
 

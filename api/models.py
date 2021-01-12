@@ -15,6 +15,9 @@ class User(AbstractUser):
     error = models.IntegerField(default=0)
     other = models.IntegerField(default=0)
 
+    class Meta:
+        ordering = ['-batch', '-solve']
+
 
 class Problem(models.Model):
     submissions = ArrayField(models.JSONField(null=True), null=True)
