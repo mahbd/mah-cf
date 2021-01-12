@@ -16,7 +16,7 @@ class User(AbstractUser):
     other = models.IntegerField(default=0)
 
     class Meta:
-        ordering = ['-batch', '-solve']
+        ordering = ['-batch', 'solve']
 
 
 class Problem(models.Model):
