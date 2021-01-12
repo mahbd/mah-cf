@@ -174,15 +174,21 @@ def single_user_cf(solver, pages=1, single=False):
     save_problems(Problem, ac_problems, solver)
 
 
-def all_user_single_page(request):
+def _all_user_single_page():
     users = User.objects.exclude(cf_handle="not_added")
     for user in users:
         thread = threading.Thread(target=single_user_cf, args=[user])
         thread.start()
+        time.sleep(5)
+
+
+def all_user_single_page(request):
+    thread = threading.Thread(target=_all_user_single_page)
+    thread.start()
     return JsonResponse({"detail": "success"})
 
 
-def all_user_all_page_fun():
+def _all_user_all_page():
     users = User.objects.exclude(cf_handle="not_added").order_by('accepted')
     for user in users:
         pages = get_submission_page_number_cf(user.cf_handle)
@@ -195,7 +201,7 @@ def all_user_all_page_fun():
 
 
 def all_user_all_page(request):
-    thread = threading.Thread(target=all_user_all_page_fun)
+    thread = threading.Thread(target=_all_user_all_page)
     thread.start()
     return JsonResponse({"detail": "success"})
 
