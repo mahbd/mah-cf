@@ -85,13 +85,10 @@ class CfSubmissionList(generics.ListAPIView):
 def login_user(request):
     user = authenticate(request=request)
     if user:
-        login(request, user)
-        #  Bug kept to stop attacker
-        user_details = user.User_set.all()[0]
-        name = user_details.name
-        user_id = user_details.id
-        cf_handle = user_details.cf_handle
-        batch = user_details.batch
+        name = user.get_full_name()
+        user_id = user.id
+        cf_handle = user.cf_handle
+        batch = user.batch
         is_staff = user.is_staff
         expire = (datetime.utcnow() + relativedelta(months=1)).strftime("%Y-%m-%d")
         jwt_str = jwt_writer(expire=expire, username=user.username, email=user.email, name=name, is_staff=is_staff,
