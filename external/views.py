@@ -165,7 +165,7 @@ def add_cf_handle(request):
     return JsonResponse({'result': 'Successful'})
 
 
-def send_problems(request):
+def transfer_problems(request):
     problem_data = []
     for problem in Problem.objects.all():
         for submission in problem.submissions:

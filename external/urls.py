@@ -9,4 +9,5 @@ urlpatterns = [
     path('cf/uaa/', views.all_user),
     path('cf/uas/', lambda x: JsonResponse({'status': 'Removed'})),
     path('add_cf_handle/', views.add_cf_handle),
+    path('transfer_problems/', views.transfer_problems)
 ]
