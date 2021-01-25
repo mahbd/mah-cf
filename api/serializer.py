@@ -1,15 +1,13 @@
+import requests
 from rest_framework import serializers
 
 from api.models import User, Problem, Submission
-from external.views import get_submission_page_number_cf
 
 
 def cf_handle_validator(value):
-    pages = get_submission_page_number_cf(value)
-    if pages > 150:
-        raise serializers.ValidationError(f'Wrong username({pages} pages)')
-    elif pages > 80:
-        raise serializers.ValidationError(f'User has >80 pages. Add manually{pages}')
+    res = requests.get('https://codeforces.com/api/user.status?handle=Fefer_Ivan&from=1&count=1').json()
+    if res['status'] != 'OK':
+        raise serializers.ValidationError(f'Wrong username. {value}')
 
 
 # noinspection PyMethodMayBeStatic

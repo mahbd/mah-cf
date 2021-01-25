@@ -13,5 +13,4 @@ urlpatterns = [
     path('users/', views.UserList.as_view()),
     path('login/', views.login_user),
     path('logout/', views.logout_user),
-    # path('test/', views.test_params),
 ]
