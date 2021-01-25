@@ -9,15 +9,24 @@ from django.shortcuts import get_object_or_404
 
 from api.models import User, Problem
 
+saved_problems, processed = {}, False
 
-def save_problems(solver, problems):
-    added_problem = []
+
+def get_saved_problems():
+    global saved_problems, processed
     for problem_json in Problem.objects.all():
         if problem_json.submissions:
             for submission in problem_json.submissions:
-                if submission['user_id'] == solver.id:
-                    added_problem.append(problem_json.problem_name)
-                    break
+                if saved_problems.get(submission['user_id']):
+                    saved_problems[submission['user_id']].append(problem_json.problem_name)
+                else:
+                    saved_problems[submission['user_id']] = [problem_json.problem_name]
+    processed = True
+    return saved_problems
+
+
+def save_problems(solver, problems):
+    added_problem = get_saved_problems()[solver.id]
     for problem_json in problems:
         problem_json = problems[problem_json]
         problem_name = problem_json['problem_name']
@@ -72,7 +81,7 @@ def _process_submissions(solver):
         print("Error in Link")
         submissions = []
     for sub in submissions:
-        contest_id = sub['contestId']
+        contest_id = sub.get('contestId', 0)
         submission_id = sub['id']
         problem_index = sub['problem']['index']
         problem_name = sub['problem']['name']
@@ -128,7 +137,7 @@ def _all_user():
     for user in users:
         thread = threading.Thread(target=_process_submissions, args=[user])
         thread.start()
-        time.sleep(5)
+        time.sleep(3)
 
 
 def all_user(request):
