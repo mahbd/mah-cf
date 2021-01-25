@@ -165,7 +165,7 @@ def add_cf_handle(request):
     return JsonResponse({'result': 'Successful'})
 
 
-def transfer_problems(request):
+def _transfer_problems():
     problem_data = []
     for problem in Problem.objects.all():
         for submission in problem.submissions:
@@ -173,4 +173,10 @@ def transfer_problems(request):
             pb = {'name': problem.problem_name, 'link': problem.problem_link, 'solver': solver}
             problem_data.append(pb)
     res = requests.post('http://mah20.pythonanywhere.com/cf/add_problems/', json={'problems': problem_data}).json()
-    return JsonResponse(res)
+    print(res)
+
+
+def transfer_problems(request):
+    thread = threading.Thread(target=_transfer_problems)
+    thread.start()
+    return JsonResponse({'result': 'success'})
