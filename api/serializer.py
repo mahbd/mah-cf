@@ -13,7 +13,6 @@ def cf_handle_validator(value):
 # noinspection PyMethodMayBeStatic
 class UserSerializer(serializers.ModelSerializer):
     cf_handle = serializers.CharField(max_length=50, validators=[cf_handle_validator])
-    name = serializers.SerializerMethodField()
     user = serializers.SerializerMethodField()
 
     class Meta:
@@ -22,9 +21,6 @@ class UserSerializer(serializers.ModelSerializer):
             'id', 'cf_handle', 'username', 'name', 'email', 'uri_id', 'batch', 'solve', 'accepted', 'wrong', 'limit',
             'error', 'other', 'user')
         extra_kwargs = {'username': {'required': False}}
-
-    def get_name(self, user):
-        return user.first_name + " " + user.last_name
 
     def get_user(self, user):
         return None

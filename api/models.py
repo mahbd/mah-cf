@@ -5,6 +5,7 @@ from django.utils import timezone
 
 
 class User(AbstractUser):
+    name = models.CharField(max_length=50, blank=True, null=True)
     cf_handle = models.CharField(max_length=100, default='not_added', unique=True)
     uri_id = models.CharField(max_length=20, default='not_added')
     batch = models.IntegerField(default=0)
