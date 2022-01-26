@@ -21,6 +21,7 @@ class UserSerializer(serializers.ModelSerializer):
         fields = (
             'id', 'cf_handle', 'username', 'name', 'email', 'uri_id', 'batch', 'solve', 'accepted', 'wrong', 'limit',
             'error', 'other', 'user')
+        extra_kwargs = {'username': {'required': False}}
 
     def get_name(self, user):
         return user.first_name + " " + user.last_name
