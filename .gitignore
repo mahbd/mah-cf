@@ -8,3 +8,4 @@ __pycache__
 /static/
 /codeforces/__pycache__/
 /config.json
+.env
